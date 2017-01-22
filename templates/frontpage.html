@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid bg-brand">
+  <header class="row py-4 hr bg-default">
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      <div class="float-left">
+        <a href="{{ 'newpost'|url }}" class="d-inline btn btn-outline-success">Write a post</a>
+      </div> <!-- /.float-dir -->
+
+      <div class="float-right">
+        {% if username %}
+        <span class="p-2 header-text">{{ username }}</span>
+        <span class="p-2 header-icon-text">{{ username|truncate(6, True) }}</span>
+        <a href="{{ 'logout'|url }}" class="p-2 header-text">Log Out</a>
+        <a href="{{ 'logout'|url }}" class="p-2 fa fa-sign-out fa-lg header-icon-text" aria-hidden="true"></a>
+        {% else %}
+        <a href="{{ 'login'|url }}" class="p-2 header-text">Log In</a>
+        <a href="{{ 'login'|url }}" class="p-2 fa fa-sign-in fa-lg header-icon-text" aria-hidden="true"></a>
+        {% endif %}
+      </div>  <!-- /.float-dir -->
+    </div> <!-- /.col -->
+  </header> <!-- /.row -->
+
+  <!-- ========== START latest posts ========== -->
+  <main class="row py-5">
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      {% if posts %}
+        {% for post in posts %}
+        <article class="hr-short">
+          <header>
+            <h3><a href="{{ 'post'|url(pid=post.key.id()) }}">{{ post.title }}</a></h3>
+            <span class="text-muted d-block mb-3">by <strong class="text-success">{{ post.author }}</strong> on {{ post.update_date|dtf }}</span>
+          </header>
+
+          <p>{{ post.excerpt|mdf }}</p>
+        </article>
+        {% endfor %}
+      {% else %}
+      <span>No post, not yet. <a href="{{ 'newpost'|url }}">Write a post</a>, will ya?</span>
+      {% endif %}
+    </div> <!-- /.col -->
+  </main> <!-- /.row -->
+  <!-- ========== END latest posts ========== -->
+</div> <!-- /.container -->
+{% endblock %}

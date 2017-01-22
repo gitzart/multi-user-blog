@@ -1,0 +1,148 @@
+@font-face {
+  font-family: Roboto;
+  src: url(/static/font/Roboto-Regular.ttf);
+}
+
+body {
+  font: 16px/1.7 "Roboto", sans-serif;
+}
+
+a, a:focus, a:hover {
+  text-decoration: none;
+}
+
+button, .btn:focus {
+  box-shadow: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Web app's background colors */
+.bg-default {
+  background-color: #fff;
+}
+
+.bg-brand {
+  background-color: #fdfdfd;
+}
+
+/* Horizontal lines or line breakers */
+.hr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.hr-short::after {
+  content: " ";
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  display: block;
+  margin-bottom: 1rem;
+  position: relative;
+  width: 100px;
+}
+
+/* Max width sizes in "px" (Copy from Bootstrap) */
+.mw-px-800 {
+  max-width: 800px;
+}
+
+.mw-px-600 {
+  max-width: 600px;
+}
+
+.mw-px-400 {
+  max-width: 400px;
+}
+
+/* Make the <button> inside <form> to look like <a> */
+.borderless {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.link-like-btn {
+  line-height: normal;
+}
+
+.link-like-btn:focus, .link-like-btn:hover {
+  outline: 0;
+}
+
+/* Transition from "Text" to "Icon Text" (Font Awesome) */
+.header-text {
+  display: none;
+}
+
+.header-icon-text {
+  display: inline;
+}
+
+/* Font size adjustment for various screen sizes */
+.flow-title-text {
+  font-size: 2rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.flow-text {
+  color: rgba(0, 0, 0, .7);
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+.card-action {
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+  padding: .5rem .8rem;
+}
+
+/* Based upon four different screen sizes of Bootstrap */
+@media screen and (min-width: 576px) {
+  .header-text {
+    display: inline;
+  }
+
+  .header-icon-text {
+    display: none;
+  }
+
+  .flow-title-text {
+    font-size: 2.2rem;
+  }
+
+  .flow-text {
+    font-size: 1.23rem;
+    text-align: justify;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .flow-title-text {
+    font-size: 2.3rem;
+  }
+
+  .flow-text {
+    font-size: 1.22rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .flow-title-text {
+    font-size: 2.4rem;
+  }
+
+  .flow-text {
+    font-size: 1.21rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .flow-title-text {
+    font-size: 2.5rem;
+  }
+
+  .flow-text {
+    font-size: 1.2rem;
+  }
+}

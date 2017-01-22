@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid bg-brand">
+  <header class="row py-4 hr bg-default">
+    <div class="col-sm-12 mw-px-400 mx-auto">
+      <div>
+        <a href="{{ 'frontpage'|url }}" class="p-2 header-text">Blog</a>
+        <a href="{{ 'frontpage'|url }}" class="p-2 fa fa-home fa-lg header-icon-text" aria-hidden="true"></a>
+      </div>
+    </div> <!-- /.col -->
+  </header> <!-- /.row -->
+
+  <section class="row py-5">
+    <h2 class="sr-only">Sign Up Form</h2>
+
+    <form class="col-sm-12 mw-px-400 mx-auto" action="" method="post">
+      {% if username_error %}
+      <div class="form-group has-danger">
+        <label class="sr-only" for="username">Username</label>
+        <input type="text" id="username" class="form-control form-control-lg form-control-danger" name="username" placeholder="Username" value="{{ username }}" autofocus="true" required="true">
+        <div class="form-control-feedback">Username must be 4-20 long alphanumeric characters!</div>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label class="sr-only" for="username">Username</label>
+        <input type="text" id="username" class="form-control form-control-lg" name="username" placeholder="Username" value="{{ username }}" autofocus="true" required="true">
+      </div>
+      {% endif %}
+
+      {% if password_error %}
+      <div class="form-group has-danger">
+        <label class="sr-only" for="password">Password</label>
+        <input type="password" id="password" class="form-control form-control-lg form-control-danger" name="password" placeholder="Password" required="true">
+        <div class="form-control-feedback">Password must have 6-20 long characters!</div>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label class="sr-only" for="password">Password</label>
+        <input type="password" id="password" class="form-control form-control-lg" name="password" placeholder="Password" required="true">
+      </div>
+      {% endif %}
+
+      {% if confirm_error %}
+      <div class="form-group has-danger">
+        <label class="sr-only" for="verify">Confirm your password</label>
+        <input type="password" id="verify" class="form-control form-control-lg form-control-danger" name="verify" placeholder="Confirm your password" required="true">
+        <div class="form-control-feedback">Passwords do not match!</div>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label class="sr-only" for="verify">Confirm your password</label>
+        <input type="password" id="verify" class="form-control form-control-lg" name="verify" placeholder="Confirm your password" required="true">
+      </div>
+      {% endif %}
+
+      {% if email_error %}
+      <div class="form-group has-danger">
+        <label class="sr-only" for="email">Email</label>
+        <input type="email" id="email" class="form-control form-control-lg form-control-danger" name="email" placeholder="Email" value="{{ email }}">
+        <div class="form-control-feedback">Email is not invalid!</div>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label class="sr-only" for="email">Email</label>
+        <input type="email" id="email" class="form-control form-control-lg" name="email" placeholder="Email" value="{{ email }}">
+      </div>
+      {% endif %}
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-outline-success btn-lg btn-block">Sign Up</button>
+      </div>
+
+      <p>Already have an account? <a href="{{ 'login'|url }}">Log In</a></p>
+    </form> <!-- /.col -->
+  </section> <!-- /.row -->
+</div> <!-- /.container -->
+{% endblock %}

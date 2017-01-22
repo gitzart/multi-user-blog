@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid bg-brand">
+  <header class="row py-4 hr bg-default">
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      <div class="float-left">
+        <a href="{{ 'frontpage'|url }}" class="p-2 header-text">Blog</a>
+        <a href="{{ 'frontpage'|url }}" class="p-2 fa fa-home fa-lg header-icon-text" aria-hidden="true"></a>
+
+        {# ========== User is the author of the Post ========== #}
+        {% if username and (username == post.author) %}
+        <a href="{{ 'edit'|url(pid=post.key.id()) }}" class="p-2 header-text">Edit</a>
+        <a href="{{ 'edit'|url(pid=post.key.id()) }}" class="p-2 fa fa-pencil fa-lg header-icon-text" aria-hidden="true"></a>
+        {% endif %}
+
+        {# ========== Like button only available to logged in users (Not post author) ========== #}
+        {% if username and (username != post.author) %}
+          {% if already_liked %}
+          <form class="d-inline" action="{{ 'like'|url(pid=post.key.id()) }}" method="post">
+            <button type="submit" class="d-inline p-2 text-primary link-like-btn borderless">Unlike</button>
+          </form>
+          {% else %}
+          <form class="d-inline" action="{{ 'like'|url(pid=post.key.id()) }}" method="post">
+            <button type="submit" class="d-inline p-2 text-primary link-like-btn borderless">Like</button>
+          </form>
+          {% endif %}
+        {% endif %}
+      </div> <!-- /.float-dir -->
+
+      <div class="float-right">
+        {% if username %}
+        <span class="p-2 header-text">{{ username }}</span>
+        <span class="p-2 header-icon-text">{{ username|truncate(6, True) }}</span>
+        <a href="{{ 'logout'|url }}" class="p-2 header-text">Log Out</a>
+        <a href="{{ 'logout'|url }}" class="p-2 fa fa-sign-out fa-lg header-icon-text" aria-hidden="true"></a>
+        {% else %}
+        <a href="{{ 'login'|url }}" class="p-2 header-text">Log In</a>
+        <a href="{{ 'login'|url }}" class="p-2 fa fa-sign-in fa-lg header-icon-text" aria-hidden="true"></a>
+        {% endif %}
+      </div>  <!-- /.float-dir -->
+    </div> <!-- /.col -->
+  </header> <!-- /.row -->
+
+  <!-- ========== START the post article ========== -->
+  <main class="row py-4 hr bg-default">
+    <article class="col-sm-12 mw-px-800 mx-auto">
+      <header class="mb-4">
+        {# -- REVIEW: A long big word, separating with punctuation
+                      other than white space needs to wrap the text.
+                      E.g This_post_title_is_too_long_to_wrap -- #}
+        <h1 class="flow-title-text">{{ post.title }}</h1>
+
+        {# ========== User is the author of the Post ========== #}
+        {% if username and username == post.author %}
+        <span class="text-muted">You published it on {{ post.update_date|dtf }}</span>
+        {% else %}
+        <span class="text-muted">by <strong class="text-success">{{ post.author }}</strong> on {{ post.update_date|dtf }}</span>
+        {% endif %}
+
+        <i class="fa fa-heart text-success ml-3" aria-hidden="true"></i>
+        <span class="ml-2">{{ post.likes|length }}</span>
+      </header>
+
+      <div class="flow-text">{{ post.content|mdf }}</div>
+    </article> <!-- /.col -->
+  </main> <!-- /.row -->
+  <!-- ========== END the post article ========== -->
+
+  <!-- ========== START the comment form and comments ========== -->
+  <section class="row py-5">
+    <div class="col-sm-12 mw-px-600 mx-auto">
+      <h3 class="sr-only">Discuss the post</h3>
+
+      <form class="" action="{{ 'comment'|url(pid=post.key.id()) }}" method="post">
+        <div class="form-group">
+          <label class="sr-only" for="comment-content">Comment</label>
+          <textarea id="comment-content" class="form-control" name="content" rows="3" placeholder="Write your response here."></textarea>
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-outline-success">Post your response</button>
+        </div> <!-- /.form-group -->
+      </form> <!-- /form -->
+
+      {% if comments %}
+        {% for comment in comments %}
+        <!-- TODO: Add anchor -->
+        <article class="card mb-3">
+
+          {# ========== User is the author of the Comment ========== #}
+          {% if username and (username == comment.author) %}
+          <div class="card-block hr">
+            <h6 class="text-muted mb-3">You responded on {{ comment.update_date|dtf }}</h6>
+            <div class="text-justify">{{ comment.content|safe }}</div>
+          </div> <!-- /.card-block -->
+
+          <div class="bg-brand card-action">
+            <a href="{{ 'c_edit'|url(pid=post.key.id(), cid=comment.key.id()) }}" class="p-2">Edit</a>
+          </div> <!-- /.card-action -->
+          {% else %}
+          <div class="card-block hr">
+            <h6 class="text-muted mb-3"><strong class="text-success">{{ comment.author }}</strong> responded on {{ comment.update_date|dtf }}</h6>
+            <div class="text-justify">{{ comment.content|safe }}</div>
+          </div> <!-- /.card-block -->
+          {% endif %}
+
+        </article> <!-- /.card -->
+        {% endfor %}
+      {% endif %}
+    </div> <!-- /.col -->
+  </section> <!-- /.row -->
+  <!-- ========== END the comment form and comments ========== -->
+</div> <!-- /.container -->
+{% endblock %}

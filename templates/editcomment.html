@@ -1,0 +1,73 @@
+{# Editor for both adding and editing operations of the Comment #}
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid bg-brand">
+  <header class="row py-4 hr bg-default">
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      <div class="float-left">
+        <a href="{{ 'post'|url(pid=post.key.id()) }}" class="p-2 text-danger">Cancel</a>
+      </div> <!-- /.float-dir -->
+
+      <div class="float-right">
+        <span class="p-2 header-text">{{ username }}</span>
+        <span class="p-2 header-icon-text">{{ username|truncate(6, True) }}</span>
+        <a href="{{ 'logout'|url }}" class="p-2 header-text">Log Out</a>
+        <a href="{{ 'logout'|url }}" class="p-2 fa fa-sign-out fa-lg header-icon-text" aria-hidden="true"></a>
+      </div>  <!-- /.float-dir -->
+    </div> <!-- /.col -->
+  </header> <!-- /.row -->
+
+  <section class="row py-4">
+    <h3 class="sr-only">Post Summary Data</h3>
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      <h5 class="mb-3 text-muted">You respond to</h5>
+
+      <div class="card">
+        {# ========== User is the author of the Post ========== #}
+        {% if username == post.author %}
+        <div class="card-block hr">
+          <h3 class="mb-3"><a href="{{ 'post'|url(pid=post.key.id()) }}">{{ post.title }}</a></h5>
+          <span class="text-muted">You published it on {{ post.update_date|dtf }}</span>
+        </div> <!-- /.card-block -->
+
+        <div class="bg-brand card-action">
+          <a href="{{ 'edit'|url(pid=post.key.id()) }}" class="p-2">Edit</a>
+        </div> <!-- /.card-action -->
+        {% else %}
+        <div class="card-block hr">
+          <h3 class="mb-3"><a href="{{ 'post'|url(pid=post.key.id()) }}">{{ post.title }}</a></h5>
+          <span class="text-muted"><strong class="text-success">{{ post.author }}</strong> published it on {{ post.update_date|dtf }}</span>
+        </div> <!-- /.card-block -->
+        {% endif %}
+      </div> <!-- /.card -->
+    </div> <!-- /.col -->
+  </section> <!-- /.row -->
+
+  <div class="row py-3">
+    <div class="col-sm-12 mw-px-800 mx-auto">
+      <form class="" action="" method="post">
+        <div class="form-group{% if comment_error %} has-danger{% endif %}">
+          <label class="sr-only" for="comment-content">Response Content</label>
+          <textarea id="comment-content" class="form-control form-control-lg" name="content" rows="10">{% if comment %}{{ comment.content|safe }}{% endif %}</textarea>
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-outline-success">Publish</button>
+        </div> <!-- /.form-group -->
+
+        {% if comment_error %}
+        <p class="text-danger">Response must have Content!</p>
+        {% endif %}
+      </form>
+
+      {% if comment %}
+      <form class="d-inline" action="{{ 'c_delete'|url(pid=post.key.id(), cid=comment.key.id()) }}" method="post">
+        <button type="submit" class="d-inline p-2 text-danger link-like-btn borderless">Delete</button>
+      </form>
+      {% endif %}
+    </div> <!-- /.col -->
+  </div> <!-- /.row -->
+</div> <!-- /.container -->
+{% endblock %}

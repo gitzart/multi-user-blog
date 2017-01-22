@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# MacOS extensions
+.DS_Store
+
+# Misc
+main_test.py
+test.txt
