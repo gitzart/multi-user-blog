@@ -75,12 +75,6 @@ class Handler(webapp2.RequestHandler):
         return pbkdf2_sha512.verify(password, hashed_pw)
 
 
-class MainPage(Handler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/html'
-        self.write('Hello, whoever it is!')
-
-
 # Validate the sign up form inputs using Regular Expression.
 USER_RE = re.compile(r'^[a-zA-Z0-9_-]{4,20}$')
 PASS_RE = re.compile(r'^.{6,20}$')
@@ -393,5 +387,5 @@ app = webapp2.WSGIApplication([
     Route('/blog/<pid:\d+>/<cid:\d+>/delete', handler=CommentDelete,
           name='c_delete'),
     Route('/blog/<pid:\d+>/like', handler=PostLike, name='like'),
-    Route('/', handler=MainPage),
+    Route('/', handler=FrontPage),
 ], debug=True)
